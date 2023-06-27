@@ -25,7 +25,7 @@ breads.get('/:arrayIndex', function(req, res) {
             bread: Bread[index]
         })
     } else {
-        res.send('404')
+        res.render('404')
     }
 })
 
