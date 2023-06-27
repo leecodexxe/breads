@@ -13,6 +13,13 @@ breads.get('/', (req, res ) => {
     // res.send(Bread)
 })
 
+  // NEW
+  breads.get('/new', (req, res) => {
+    console.log('hello')
+    res.render('New')
+})
+
+
 
 // SHOW 
 
@@ -44,10 +51,6 @@ breads.post('/', (req, res) => {
   })
   
 
-  // NEW
-breads.get('/new', (req, res) => {
-    res.render('new')
-})
 
   
 
