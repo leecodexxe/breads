@@ -1,6 +1,6 @@
 const React = require('react');
 
-const Default = require('./layout/default')
+const Default = require('./layouts/default')
 
 
 function Index({breads, title}){

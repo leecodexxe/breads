@@ -17,8 +17,16 @@ breads.get('/', (req, res ) => {
 // SHOW 
 
 breads.get('/:arrayIndex', function(req, res) {
-    const index = req.params.arrayIndex
-    res.send(Bread[index])
+    const index = req.params.arrayIndex;
+    const hasBread = Bread[index];
+    
+    if(hasBread) {
+        res.render('Show', {
+            bread: Bread[index]
+        })
+    } else {
+        res.send('404')
+    }
 })
 
 
