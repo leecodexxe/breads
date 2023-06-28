@@ -21,8 +21,9 @@ breads.get('/', (req, res ) => {
 
 
 
-// SHOW 
 
+
+// SHOW 
 breads.get('/:arrayIndex', function(req, res) {
     const index = req.params.arrayIndex;
     const hasBread = Bread[index];
@@ -58,7 +59,25 @@ breads.delete('/:indexArray', (req, res) => {
   res.status(303).redirect('/breads')
 })
 
-  
+// UPDATE
+breads.put('/:arrayIndex', (req, res) => {
+  if(req.body.hasGluten === 'on'){
+    req.body.hasGluten = true
+  } else {
+    req.body.hasGluten = false
+  }
+  Bread[req.params.arrayIndex] = req.body
+  res.redirect(`/breads/${req.params.arrayIndex}`)
+})
+
+
+  // EDIT
+breads.get('/:indexArray/edit', (req, res) => {
+  res.render('edit', {
+    bread: Bread[req.params.indexArray],
+    index: req.params.indexArray
+  })
+})
 
 
   
