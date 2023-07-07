@@ -4,32 +4,31 @@ const Default = require('./layouts/default')
 
 
 function Index({breads, title}){
+  console.log(breads.length)
+
     return (
       <Default title={title}>
         <h2>Index Page</h2>
         <div className="newButton">
           <a href="/breads/new"><button>Add a new bread</button></a>
         </div>
-
         <ul>
-            {/* {
-              breads.map(bread => {
-                return (
-                    <li>
-                        {bread.name}
-                    </li>
-                )
-              })  
-            } */}
             {
-              breads.map((bread, index) => (
-                    <li key={index}>
-                        <a href={`/breads/${index}`}>
-                        {bread.name}
-                        </a>
-                    </li>
-                )
-              ) 
+            breads.length ? breads.map((bread, index) => {
+                const breadId = bread.id;
+
+                return (
+                  <li key={index}>
+                      <a href={`/breads/${breadId}`}>
+                      {bread.name}
+                      </a>
+                      <ul>
+                        <li>{bread.getBakedBy()}</li>
+                      </ul>
+                  </li>
+                   )
+                }
+              ) : (<div>You're out of bread!!!!</div>)
             }
         </ul>
         {/* <p>I have {breads[1].name} bread</p> */}
