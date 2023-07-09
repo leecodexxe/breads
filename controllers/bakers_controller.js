@@ -5,6 +5,22 @@ const bakerSeedData = require('../models/baker_seed')
 
 
 
+baker.get('/', function(req, res){
+  Baker.find()
+  .populate('breads')
+  .then(foundBakers => res.send(foundBakers))
+})
+
+// this route uses the virtual in our baker model
+baker.get('/:id', (req, res) => {
+  Baker.findById(req.params.id)
+  .populate('breads')
+  .then(foundBaker => {
+    res.render('bakerShow', {
+      baker: foundBaker
+    })
+  })
+})
 
 
 
