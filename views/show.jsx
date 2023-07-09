@@ -1,7 +1,7 @@
 const React = require('react')
 const Default = require('./layouts/Default')
 
-function Show ({bread, bakersOtherBreads}) {
+function Show ({bread}) {
   console.log(bread)
     return (
         <Default title={bread.name}>
@@ -21,23 +21,6 @@ function Show ({bread, bakersOtherBreads}) {
         </p>
         <img src={bread.image} alt={bread.name} />
         <p>{bread.getBakedBy()}</p>
-        <div>
-          {!bakersOtherBreads.length ? 
-          <div>{bread.baker} doesn't have other 😥 </div> : 
-          (<div>
-            <p>{bread.baker}'s other breads: </p>
-            <ul>
-            {bakersOtherBreads.map(bread => (
-              <li>
-                <a href={`/breads/${bread.id}`}>
-                {bread.name}
-                </a>
-              </li>
-              ))}
-            </ul>
-          </div>)}
-          {}
-        </div>
         <li><a href="/breads">Go home</a></li>
       </Default>
       

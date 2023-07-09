@@ -2,12 +2,14 @@ const express = require('express')
 const breads = express.Router()
 
 const Bread = require('../models/bread')
+const Baker = require('../models/baker')
 const seedData = require('../seeds')
 
 
 // INDEX /breads/
 breads.get('/', (req, res) => {
   Bread.find()
+      .populate('baker')
       .then(foundBreads => {
           res.render('index', {
               breads: foundBreads,
@@ -18,8 +20,11 @@ breads.get('/', (req, res) => {
 
   // NEW
   breads.get('/new', (req, res) => {
-    console.log('hello')
-    res.render('New')
+    Baker.find().then(function(foundBakers){
+      res.render('New', {
+        bakers: foundBakers
+      })
+    })
 })
 
 
@@ -27,15 +32,10 @@ breads.get('/', (req, res) => {
 breads.get('/:id', function(req, res) {
     const id = req.params.id;
     Bread.findById(id)
+    .populate('baker')
     .then(foundBread => {
-      const bakersName = foundBread.baker;
-      Bread.findBakersOtherBreads(bakersName)
-      .then((bakersOtherBreads) => {
-        console.log({bakersOtherBreads})
-        res.render('Show', {
-          bread: foundBread,
-          bakersOtherBreads
-        })
+      res.render('Show', {
+        bread: foundBread,
       })
   
     })
@@ -61,11 +61,11 @@ breads.post('/', (req, res) => {
   .then(() => {
     res.redirect('/breads')
   })
-  .catch(error => {
-      res.render('New', {
-        error
-      })
-  })
+  // .catch(error => {
+  //     res.render('New', {
+  //       error
+  //     })
+  // })
 })
 
 
@@ -101,13 +101,17 @@ breads.put('/:id', (req, res) => {
 
   // EDIT
 breads.get('/:id/edit', (req, res) => {
-
-  Bread.findById(req.params.id)
-  .then(foundBread => {
-    res.render('edit', {
-      bread: foundBread,
+  Baker.find()
+    .then(foundBakers => {
+      Bread.findById(req.params.id)
+      .then(foundBread => {
+        res.render('edit', {
+          bread: foundBread,
+          bakers: foundBakers
+        })
+      })
     })
-  })
+
 })
 
 // SEED ROUTE

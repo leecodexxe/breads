@@ -22,21 +22,18 @@ app.use(express.urlencoded({extended: true}))
 // MIDDLEWARE
 app.use(methodOverride('_method'))
 
-
-
-
-
 // ROUTES 
-
 app.get('/', function(req, res) {
     res.send('Welcome to an Awesome App about Bread!')
 })
 
-
 // Breads routes
-
 const breadsController = require('./controllers/breads_controller.js')
 app.use('/breads', breadsController)
+
+// Baker routes
+const bakerController = require('./controllers/bakers_controller.js')
+app.use('/bakers', bakerController)
 
 app.get('*', function(req,res){
     res.send('404')
