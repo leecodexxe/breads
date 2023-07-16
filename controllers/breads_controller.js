@@ -4,25 +4,47 @@ const breads = express.Router()
 const Bread = require('../models/bread')
 const Baker = require('../models/baker')
 const seedData = require('../seeds')
+const { Error } = require('mongoose')
 
 
 // INDEX /breads/
-breads.get('/', (req, res) => {
+breads.get('/', async (req, res) => {
 
-  Baker.find()
-    .then(foundBakers => {
-      Bread.find()
-          .populate('baker')
-          .then(foundBreads => {
-              res.render('index', {
-                  breads: foundBreads,
-                  bakers: foundBakers,
-                  title: 'Index Page'
-              })
-          })
+try {
+  const foundBakers = await Baker.find().lean()
+  const foundBreads = await Bread.find().populate('baker').limit(3);
 
-    })
+  console.log(foundBakers)
+  console.log(foundBreads)
+
+  res.render('index', {
+          breads: foundBreads,
+          bakers: foundBakers,
+          title: 'Index Page'
+  })
+} catch (error) {
+  console.log(error)
+  
+}
+
+
 })
+// breads.get('/', (req, res) => {
+
+//   Baker.find()
+//     .then(foundBakers => {
+//       Bread.find()
+//           .populate('baker')
+//           .then(foundBreads => {
+//               res.render('index', {
+//                   breads: foundBreads,
+//                   bakers: foundBakers,
+//                   title: 'Index Page'
+//               })
+//           })
+
+//     })
+// })
 
   // NEW
   breads.get('/new', (req, res) => {
