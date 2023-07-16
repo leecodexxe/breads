@@ -11,10 +11,7 @@ breads.get('/', async (req, res) => {
 
 try {
   const foundBakers = await Baker.find().lean()
-  const foundBreads = await Bread.find().populate('baker').limit(3);
-
-  console.log(foundBakers)
-  console.log(foundBreads)
+  const foundBreads = await Bread.find().populate('baker');
 
   res.render('index', {
           breads: foundBreads,
@@ -28,22 +25,6 @@ try {
 
 
 })
-// breads.get('/', (req, res) => {
-
-//   Baker.find()
-//     .then(foundBakers => {
-//       Bread.find()
-//           .populate('baker')
-//           .then(foundBreads => {
-//               res.render('index', {
-//                   breads: foundBreads,
-//                   bakers: foundBakers,
-//                   title: 'Index Page'
-//               })
-//           })
-
-//     })
-// })
 
   // NEW
   breads.get('/new', (req, res) => {
