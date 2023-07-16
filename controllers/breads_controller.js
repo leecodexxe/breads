@@ -4,7 +4,6 @@ const breads = express.Router()
 const Bread = require('../models/bread')
 const Baker = require('../models/baker')
 const seedData = require('../seeds')
-const { Error } = require('mongoose')
 
 
 // INDEX /breads/
@@ -49,7 +48,7 @@ try {
   // NEW
   breads.get('/new', (req, res) => {
     Baker.find().then(function(foundBakers){
-      res.render('New', {
+      res.render('new', {
         bakers: foundBakers
       })
     })
