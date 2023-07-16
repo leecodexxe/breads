@@ -61,7 +61,7 @@ breads.get('/:id', function(req, res) {
     Bread.findById(id)
     .populate('baker')
     .then(foundBread => {
-      res.render('Show', {
+      res.render('show', {
         bread: foundBread,
       })
   
@@ -88,11 +88,6 @@ breads.post('/', (req, res) => {
   .then(() => {
     res.redirect('/breads')
   })
-  // .catch(error => {
-  //     res.render('New', {
-  //       error
-  //     })
-  // })
 })
 
 
@@ -100,7 +95,6 @@ breads.post('/', (req, res) => {
 
   // DELETE
 breads.delete('/:id', (req, res) => {
-  // Bread.splice(req.params.indexArray, 1)
 
   Bread.findByIdAndDelete(req.params.id)
   .then(() => {
